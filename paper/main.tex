@@ -128,10 +128,10 @@ Fix an integer $a\ge1$. For $t\ge n$ let
 \[
 E_t=\bigl\{S_t-S_{t-n}=-a,\ S_u>S_t\text{ for }t-n\le u<t\bigr\}
 \]
-be the event that the window ending at $t$ is a first-passage path to $-a$. By stationarity of the increments, $\PP(E_t)=f_n(a)$ for every $t\ge n$.
+be the event that the window ending at $t$ is a first-passage path to $-a$. In this section and the next, $m=\lfloor n/2\rfloor$ as in Section~\ref{sec:intro}. By stationarity of the increments, $\PP(E_t)=f_n(a)$ for every $t\ge n$.
 
 \begin{lemma}\label{lem:upper}
-Let $n\ge4$ and $m=\lfloor n/2\rfloor$. Uniformly over $a\ge1$,
+Let $n\ge4$. Uniformly over $a\ge1$,
 \[
 \PP\Bigl(\bigcup_{s=0}^mE_{n+s}\Bigr)\le\frac C{\log n}.
 \]
@@ -167,7 +167,7 @@ The window ending at $t+s$ starts at height $S_{t-n}+w(s)$, so $E_{t+s}$ require
 \end{proof}
 
 \begin{lemma}\label{lem:lower}
-Let $m=\lfloor n/2\rfloor$. Then
+For $n\ge2$,
 \[
 \PP\Bigl(\bigcup_{s=0}^mE_{n+s}\Bigr)\ge\frac{(m+1)f_n(a)}{1+C\sum_{s=1}^ms^{-1}}.
 \]
@@ -183,7 +183,7 @@ Summing over $r$ gives $\EE N\le(1+C\sum_{s=1}^ms^{-1})\PP(N>0)$.
 
 \section{Proof of Theorem~\ref{thm:main}}\label{sec:proof}
 
-Let $m=\lfloor n/2\rfloor$, $a=a_n$ and $q_n=\PP(\bigcup_{s=0}^mE_{n+s})$. Since $a_n/\sqrt n\to|\lambda|$, Lemma~\ref{lem:fp} gives $f_n(a_n)\ge\kappa_{|\lambda|}/(2n)$ for large $n$, and Lemmas~\ref{lem:upper} and \ref{lem:lower} give
+Let $a=a_n$ and $q_n=\PP(\bigcup_{s=0}^mE_{n+s})$. Since $a_n/\sqrt n\to|\lambda|$, Lemma~\ref{lem:fp} gives $f_n(a_n)\ge\kappa_{|\lambda|}/(2n)$ for large $n$, and Lemmas~\ref{lem:upper} and \ref{lem:lower} give
 \begin{equation}\label{eq:qn}
 \frac{c_\lambda}{\log n}\le q_n\le\frac C{\log n}
 \end{equation}
