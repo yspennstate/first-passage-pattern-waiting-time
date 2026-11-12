@@ -1,0 +1,40 @@
+{
+  "A*n": {
+    "parameters": [
+      4.569352854930569
+    ],
+    "weighted_squared_residual": 1739.6954081562976,
+    "degrees_of_freedom": 7,
+    "n_min": 100,
+    "n_max": 1000000
+  },
+  "A*n*log(n)": {
+    "parameters": [
+      0.7575228048932666
+    ],
+    "weighted_squared_residual": 3175.805100927644,
+    "degrees_of_freedom": 7,
+    "n_min": 100,
+    "n_max": 1000000
+  },
+  "A*n**beta": {
+    "parameters": [
+      3.060643876764342,
+      1.0675675538846927
+    ],
+    "weighted_squared_residual": 11.69159326493144,
+    "degrees_of_freedom": 6,
+    "n_min": 100,
+    "n_max": 1000000
+  },
+  "n*(A+B*log(n))": {
+    "parameters": [
+      2.652508122748213,
+      0.3262750095940404
+    ],
+    "weighted_squared_residual": 7.3481811489727775,
+    "degrees_of_freedom": 6,
+    "n_min": 100,
+    "n_max": 1000000
+  }
+}

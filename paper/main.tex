@@ -1,0 +1,286 @@
+\documentclass[11pt]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,amsthm,mathtools,booktabs}
+\usepackage[margin=1.1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\numberwithin{equation}{section}
+
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\FP}{\mathrm{FP}}
+
+\hypersetup{pdftitle={The waiting time for a first-passage pattern in simple random walk},pdfauthor={Yitzchak Shmalo}}
+
+\title[Waiting for a first-passage pattern]{The waiting time for a first-passage pattern in simple random walk}
+\author{Yitzchak Shmalo}
+\address{Einstein Institute of Mathematics, The Hebrew University of Jerusalem, Jerusalem, Israel}
+\email{yitzchak.shmalo@gmail.com}
+\date{November 2026}
+\subjclass[2020]{60G50, 60C05, 68R15}
+\keywords{simple random walk, pattern waiting time, first passage, descending ladder times}
+
+\begin{document}
+\begin{abstract}
+Fix $\lambda<0$ and let $T_n$ be the first time at which the last $n$ steps of a simple symmetric random walk form a first-passage path to the level nearest $\lambda\sqrt n$. Pitman and Tang showed that $\EE T_n$ lies between constant multiples of $n$ and $n^{5/4}$, and Peres conjectured that its order is $n\log n$. We prove this conjecture. The proof shows that a first-passage window starts in a given interval of length $n/2$ with probability of order $1/\log n$. The upper bound for this probability comes from the range of the difference of two independent walks sampled at the descending ladder times of one of them. This range has expected size $O(\sqrt n/\log n)$, because the ladder times number about $\sqrt n$ while their return potential grows like $\log n$.
+\end{abstract}
+\maketitle
+
+\section{Introduction}\label{sec:intro}
+
+Let $S_0=0$ and $S_t=\xi_1+\dots+\xi_t$, where the $\xi_i$ are independent and equal to $\pm1$ with probability $1/2$ each. A \emph{word} of length $n$ is a nearest-neighbour path $w=(w(0),\dots,w(n))$ with $w(0)=0$. The waiting time for a set $A$ of words of length $n$ is
+\[
+T(A)=\inf\bigl\{t\ge n:(S_{t-n+i}-S_{t-n})_{0\le i\le n}\in A\bigr\},
+\]
+the first time at which the last $n$ steps of the walk form a word in $A$. For a single word the classical theory of Li \cite{Li}, Gerber and Li \cite{GL} and Guibas and Odlyzko \cite{GO} computes $\EE T(A)$ through the overlaps of the word with itself. Pitman and Tang \cite{PT} studied the waiting times of families of words that a scaled walk would recognise as a Brownian path of a given type: excursions, bridges, meanders and first-passage paths.
+
+For $\lambda<0$ and $n\ge1$, let $\lambda_n=\lfloor\lambda\sqrt n\rfloor$ if $\lfloor\lambda\sqrt n\rfloor$ has the parity of $n$, and $\lambda_n=\lfloor\lambda\sqrt n\rfloor+1$ otherwise, and put $a_n=-\lambda_n$. The first-passage words are
+\[
+\FP_{\lambda,n}=\bigl\{w:\ w(n)=\lambda_n,\ w(i)>w(n)\text{ for }0\le i<n\bigr\},
+\]
+the words that reach the level $\lambda_n$ for the first time at time $n$. This set is nonempty once $a_n\ge1$, which holds for all $n\ge1$. Put $T_n=T(\FP_{\lambda,n})$. Pitman and Tang \cite[Theorem~1.8]{PT} proved that $\EE T_n$ is bounded above and below by constant multiples of $n^{5/4}$ and $n$, and asked for its order \cite[Question~1.7]{PT}. In the published version of their paper \cite[Conjecture~1]{PTpub} they record Peres's conjecture that $\EE T_n$ is of order $n\log n$; Tang repeats it as Conjecture~2.5.2 of his thesis \cite{Tang}. We prove the conjecture.
+
+\begin{theorem}\label{thm:main}
+Fix $\lambda<0$. There are constants $0<c_\lambda<C_\lambda<\infty$ and $n_\lambda$ such that
+\begin{equation}\label{eq:main}
+c_\lambda n\log n\le\EE T_n\le C_\lambda n\log n,\qquad n\ge n_\lambda.
+\end{equation}
+Moreover, $\PP(T_n\le Mn)\to0$ for every fixed $M$, and $\PP(T_n>k(n+\lfloor n/2\rfloor))\le\exp(-c_\lambda k/\log n)$ for all integers $k\ge0$ and $n\ge n_\lambda$.
+\end{theorem}
+
+The same statements hold, with the same proof, for any integers $a_n\ge1$ with $a_n\equiv n\pmod 2$ and $a_n/\sqrt n\to\alpha>0$; only the asymptotics of $\PP(\tau_{-a_n}=n)$ in Lemma~\ref{lem:fp} enter. The upper bound on the probability in Lemma~\ref{lem:upper}, and hence the lower bound on $\EE T_n$, hold uniformly over every endpoint $-a<0$.
+
+The theorem determines the order of $\EE T_n$ but not its leading constant; whether $\EE T_n/(n\log n)$ converges, and how a limit would depend on $\lambda$, remain open.
+
+The method is as follows. Let $m=\lfloor n/2\rfloor$ and let $q_n$ be the probability that some first-passage window starts at one of the times $0,1,\dots,m$. Disjoint blocks of length $n+m$ then give independent trials with success probability $q_n$, and a union bound over translates of $\{0,\dots,m\}$ bounds $\PP(T_n\le n+h)$. So the theorem follows once $q_n$ is bounded above and below by constant multiples of $1/\log n$. The lower bound $q_n\ge c/\log n$ is a second-moment bound. Given a first-passage window, a second one ending $s$ steps later requires the $s$ new steps to complete a first passage, which has probability at most $C/s$; summing over $s\le m$ gives the factor $\log n$. The upper bound $q_n\le C/\log n$ is the main point. Split the steps into three independent pieces: the first $m$ steps, the middle $n-m$ steps, and the $m$ steps after time $n$. A window starting at time $s\le m$ contains the middle piece, and it is a first-passage window only if $s$ is a descending ladder time of the walk after time $n$ and the middle increment takes one particular value determined by the two outer pieces at time $s$. So the middle increment must fall in the set of values of $X_s-Y_s$ at the ladder times $s$ of $Y$, where $X$ and $Y$ are the walks after time $0$ and after time $n$. Lemma~\ref{lem:range} shows that this set has expected size $O(\sqrt m/\log m)$, while each value has probability $O(1/\sqrt n)$ for the middle increment.
+
+Section~\ref{sec:fp} collects the first-passage estimates, Section~\ref{sec:range} proves the bound on the range at ladder times, Section~\ref{sec:block} bounds the probability of a first-passage window in a block from above and below, Section~\ref{sec:proof} deduces Theorem~\ref{thm:main}, and Section~\ref{sec:numerics} lists exact and simulated values of $\EE T_n$.
+
+\section{First-passage probabilities}\label{sec:fp}
+
+Throughout, logarithms are natural and $C,c$ denote positive absolute constants whose values may change from line to line, and $x_n\sim y_n$ means $x_n/y_n\to1$. For a simple symmetric walk $S$ started at $0$ write
+\[
+p_s(b)=\PP(S_s=b),\qquad \tau_{-b}=\inf\{t\ge0:S_t=-b\},\qquad f_s(b)=\PP(\tau_{-b}=s),
+\]
+for integers $s\ge0$ and $b\ge1$; both vanish unless $b\equiv s\pmod2$.
+
+\begin{lemma}\label{lem:fp}
+For $s\ge1$ and $b\ge1$,
+\begin{equation}\label{eq:ballot}
+f_s(b)=\frac bs\,p_s(b)\qquad\text{and}\qquad\sup_{b\ge1}f_s(b)\le\frac Cs.
+\end{equation}
+If $a_n\equiv n\pmod2$ and $a_n/\sqrt n\to\alpha>0$, then
+\begin{equation}\label{eq:fpasym}
+f_n(a_n)\sim\frac{\kappa_\alpha}n,\qquad\kappa_\alpha=\alpha\sqrt{2/\pi}\,e^{-\alpha^2/2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+First passage to $-b$ at time $s$ means that the walk is at $-b+1$ at time $s-1$ without having visited $-b$, and then steps down. By the reflection principle the number of paths from $0$ to $-b+1$ in $s-1$ steps that visit $-b$ equals the number of paths from $0$ to $-b-1$, so $f_s(b)=\frac12\{p_{s-1}(b-1)-p_{s-1}(b+1)\}$, and a direct computation with binomial coefficients turns this into $\frac bs p_s(b)$. For the bound we use
+\begin{equation}\label{eq:gauss}
+p_s(b)\le Cs^{-1/2}e^{-b^2/(4s)}\qquad(s\ge1,\ b\in\Z).
+\end{equation}
+For $s=2k$ and $b=2j$ with $0\le j\le k$,
+\[
+\frac{p_{2k}(2j)}{p_{2k}(0)}=\prod_{r=1}^{j}\frac{k-r+1}{k+r}=\prod_{r=1}^{j}\Bigl(1-\frac{2r-1}{k+r}\Bigr)\le\exp\Bigl(-\sum_{r=1}^j\frac{2r-1}{k+j}\Bigr)=e^{-j^2/(k+j)}\le e^{-j^2/(2k)},
+\]
+and $j^2/(2k)=b^2/(4s)$. For $s=2k+1$ and $b=2j+1$ with $0\le j\le k$, the same computation gives the ratio $p_{2k+1}(2j+1)/p_{2k+1}(1)\le e^{-j(j+1)/(k+j+1)}\le e^{-(b^2-1)/(4s)}$. Since $p_s(0)$ and $p_s(1)$ are at most $Cs^{-1/2}$ by Stirling's formula, and $p_s(-b)=p_s(b)$, this proves \eqref{eq:gauss}. Then $f_s(b)\le Cs^{-1}(b/\sqrt s)e^{-b^2/(4s)}\le C/s$, because $xe^{-x^2/4}$ is bounded. Finally, Stirling's formula gives $p_n(a_n)\sim\sqrt{2/(\pi n)}\,e^{-\alpha^2/2}$, which with the identity gives \eqref{eq:fpasym}.
+\end{proof}
+
+\section{Descending ladder times of a walk}\label{sec:range}
+
+Let $X$ and $Y$ be independent simple symmetric walks started at $0$. Call $s\ge1$ a \emph{ladder time} of $Y$ if $Y_s<Y_u$ for all $0\le u<s$, and call $0$ a ladder time as well. Let $J_s$ be the indicator that $s$ is a ladder time, and for $L\ge1$ put
+\[
+V_L=\sum_{s=0}^LJ_s,\qquad R_L=\{X_s-Y_s:\ 0\le s\le L,\ J_s=1\},\qquad G_L=\sum_{s=0}^L\PP(J_s=1,\ X_s=Y_s).
+\]
+$R_L$ is the set of values of $X-Y$ at the ladder times of $Y$ up to time $L$, and $G_L$ is the expected number of ladder times up to $L$ at which $X-Y$ is at $0$.
+
+\begin{lemma}\label{lem:range}
+For all $L\ge1$,
+\begin{equation}\label{eq:range}
+\EE V_L\le1+\sqrt L,\qquad G_L=1+\sum_{s=1}^L4^{-s}\binom{s-1}{\lfloor(s-1)/2\rfloor}^{2}\sim\frac{\log L}{2\pi},\qquad \EE|R_L|\le\frac{\EE V_{2L}}{G_L}\le\frac{C\sqrt L}{\log(L+2)}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For $s\ge1$, $s$ is a ladder time with $Y_s=-b$ exactly when $\tau_{-b}=s$. By \eqref{eq:ballot} and symmetry,
+\[
+\PP(J_s=1)=\sum_{b\ge1}\frac bs\,p_s(b)=\frac{\EE|Y_s|}{2s}\le\frac1{2\sqrt s},
+\]
+and summing over $1\le s\le L$ gives the bound on $\EE V_L$. By independence of $X$ and $Y$,
+\begin{equation}\label{eq:gs}
+g_s:=\PP(J_s=1,\ X_s=Y_s)=\sum_{b\ge1}\frac bs\,p_s(b)^2=4^{-s}\binom{s-1}{\lfloor(s-1)/2\rfloor}^{2}.
+\end{equation}
+For the last equality write $b=s-2j$, so that $p_s(b)=2^{-s}\binom sj$, and use $\frac{s-2j}s\binom sj^2=\binom{s-1}j^2-\binom{s-1}{j-1}^2$; the sum over $0\le j\le\lfloor(s-1)/2\rfloor$ telescopes. Stirling's formula gives $g_s\sim(2\pi s)^{-1}$, which proves the asymptotics of $G_L$; in particular $G_L\ge c\log(L+2)$ for all $L\ge1$.
+
+For $z\in\Z$ let $\sigma_z=\inf\{s\ge0:J_s=1,\ X_s-Y_s=z\}$, a stopping time for the pair $(X,Y)$. On $\{\sigma_z<\infty\}$ the value $Y_{\sigma_z}$ is below all earlier values of $Y$, so for $u\ge1$ the time $\sigma_z+u$ is a ladder time of $Y$ exactly when $u$ is a ladder time of the walk $(Y_{\sigma_z+v}-Y_{\sigma_z})_{v\ge0}$. By the strong Markov property the walks shifted at $\sigma_z$ are independent simple walks, independent of the past, and $X-Y$ equals $z$ at time $\sigma_z+u$ exactly when the shifted difference is $0$ at time $u$. Hence, on $\{\sigma_z\le L\}$, the conditional expected number of ladder times $\sigma_z+u$ with $0\le u\le L$ at which $X-Y=z$ is exactly $G_L$. These ladder times lie in $[0,2L]$, and a ladder time is counted for only one $z$, the value of $X-Y$ at that time. Summing over $z$ (only $|z|\le2L$ can have $\sigma_z\le L$) and taking expectations gives $G_L\,\EE|R_L|\le\EE V_{2L}$, since $|R_L|$ is the number of $z$ with $\sigma_z\le L$.
+\end{proof}
+
+\section{The probability of a first-passage window in a block}\label{sec:block}
+
+Fix an integer $a\ge1$. For $t\ge n$ let
+\[
+E_t=\bigl\{S_t-S_{t-n}=-a,\ S_u>S_t\text{ for }t-n\le u<t\bigr\}
+\]
+be the event that the window ending at $t$ is a first-passage path to $-a$. By stationarity of the increments, $\PP(E_t)=f_n(a)$ for every $t\ge n$.
+
+\begin{lemma}\label{lem:upper}
+Let $n\ge4$ and $m=\lfloor n/2\rfloor$. Uniformly over $a\ge1$,
+\[
+\PP\Bigl(\bigcup_{s=0}^mE_{n+s}\Bigr)\le\frac C{\log n}.
+\]
+\end{lemma}
+
+\begin{proof}
+Write the steps up to time $n+m$ as three independent pieces,
+\[
+X_s=S_s\ (0\le s\le m),\qquad B=S_n-S_m,\qquad Y_s=S_{n+s}-S_n\ (0\le s\le m),
+\]
+and extend $X$ and $Y$ beyond time $m$ by independent steps, so that they are independent simple walks independent of $B$; the extension does not change $R_m$. Suppose $E_{n+s}$ occurs for some $1\le s\le m$. The window $[s,n+s]$ contains the times $n,\dots,n+s-1$, so $S_{n+s}<S_{n+u}$ for $0\le u<s$, that is, $s$ is a ladder time of $Y$. The displacement condition reads $X_m+B+Y_s-X_s=-a$. For $s=0$ the same holds, with $0$ a ladder time. Hence
+\[
+\bigcup_{s=0}^mE_{n+s}\subset\{B\in R_m-X_m-a\}.
+\]
+Conditionally on $(X,Y)$ the set $R_m-X_m-a$ has $|R_m|$ elements, and $B$ has the law of $S_{n-m}$, so by \eqref{eq:gauss} and Lemma~\ref{lem:range}
+\[
+\PP\Bigl(\bigcup_{s=0}^mE_{n+s}\Bigr)\le\Bigl(\sup_bp_{n-m}(b)\Bigr)\EE|R_m|\le\frac C{\sqrt{n-m}}\cdot\frac{\sqrt m}{\log(m+2)}\le\frac C{\log n}.\qedhere
+\]
+\end{proof}
+
+For the lower bound we need the probability of a second first-passage window shortly after a first one. The count of such completions is (2.21) of \cite{PT}; we use it in the following form.
+
+\begin{lemma}\label{lem:overlap}
+Let $t\ge n$ and $1\le s<n$, and let $w$ be a word with $w(n)=-a$ and $w(i)>-a$ for $i<n$. On the event that $(S_{t-n+i}-S_{t-n})_{0\le i\le n}=w$,
+\[
+\PP(E_{t+s}\mid\mathcal F_t)=\mathbf 1_{\{w(s)<0\}}\,f_s(-w(s))\le\frac Cs,
+\]
+where $\mathcal F_t$ is the $\sigma$-field of the first $t$ steps.
+\end{lemma}
+
+\begin{proof}
+The window ending at $t+s$ starts at height $S_{t-n}+w(s)$, so $E_{t+s}$ requires $S_{t+s}=S_{t-n}+w(s)-a=S_t+w(s)$. The time $t$ lies in this window before its end, so $E_{t+s}$ requires $S_t>S_t+w(s)$, that is, $w(s)<0$. If $w(s)<0$, every height $S_u$ with $t-n+s\le u\le t$ is at least $S_t$, because $S_t$ is the minimum of the window ending at $t$, and so exceeds $S_t+w(s)$. The remaining requirement is that the $s$ steps after $t$, which are independent of $\mathcal F_t$, reach $w(s)$ for the first time at step $s$. Its probability is $f_s(-w(s))$, and \eqref{eq:ballot} bounds it.
+\end{proof}
+
+\begin{lemma}\label{lem:lower}
+Let $m=\lfloor n/2\rfloor$. Then
+\[
+\PP\Bigl(\bigcup_{s=0}^mE_{n+s}\Bigr)\ge\frac{(m+1)f_n(a)}{1+C\sum_{s=1}^ms^{-1}}.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $N=\sum_{s=0}^m\mathbf 1_{E_{n+s}}$, so that $\EE N=(m+1)f_n(a)$, and let $\rho=\min\{r:E_{n+r}\text{ occurs}\}$, with $\rho=\infty$ when $N=0$. The event $\{\rho=r\}$ is in $\mathcal F_{n+r}$, and on it the window ending at $n+r$ is a first-passage word. Since $m<n$, Lemma~\ref{lem:overlap} gives
+\[
+\EE[N\mid\mathcal F_{n+r}]\le1+C\sum_{s=1}^{m-r}\frac1s\qquad\text{on }\{\rho=r\}.
+\]
+Summing over $r$ gives $\EE N\le(1+C\sum_{s=1}^ms^{-1})\PP(N>0)$.
+\end{proof}
+
+\section{Proof of Theorem~\ref{thm:main}}\label{sec:proof}
+
+Let $m=\lfloor n/2\rfloor$, $a=a_n$ and $q_n=\PP(\bigcup_{s=0}^mE_{n+s})$. Since $a_n/\sqrt n\to|\lambda|$, Lemma~\ref{lem:fp} gives $f_n(a_n)\ge\kappa_{|\lambda|}/(2n)$ for large $n$, and Lemmas~\ref{lem:upper} and \ref{lem:lower} give
+\begin{equation}\label{eq:qn}
+\frac{c_\lambda}{\log n}\le q_n\le\frac C{\log n}
+\end{equation}
+for $n\ge n_\lambda$.
+
+\emph{Lower bound.} For an integer $h\ge0$ the starting times $0,\dots,h$ are covered by at most $1+\lfloor h/(m+1)\rfloor\le1+2h/n$ translates of $\{0,\dots,m\}$. By stationarity and \eqref{eq:qn},
+\begin{equation}\label{eq:short}
+\PP(T_n\le n+h)=\PP\Bigl(\bigcup_{s=0}^hE_{n+s}\Bigr)\le\frac{C(1+2h/n)}{\log n}.
+\end{equation}
+With $h=Mn$ this tends to $0$ for every fixed $M$. Take $\delta=1/(8C)$ and $h=\lfloor\delta n\log n\rfloor$. For large $n$ the right side of \eqref{eq:short} is at most $C/\log n+1/4\le1/2$, so $\EE T_n\ge h\,\PP(T_n>n+h)\ge h/2\ge\delta n\log n/3$.
+
+\emph{Upper bound.} Divide the steps into consecutive disjoint blocks of length $\ell=n+m$, and call a block successful if one of the windows starting at its first $m+1$ times is a first-passage window. These windows end inside the block, so the events for different blocks are independent, and each has probability $q_n$. If $K$ is the index of the first successful block, then $T_n\le\ell K$, and $K$ is geometric with parameter $q_n$. Hence $\EE T_n\le\ell/q_n\le C_\lambda n\log n$, and for integers $k\ge0$, $\PP(T_n>k\ell)\le\PP(K>k)=(1-q_n)^k\le\exp(-c_\lambda k/\log n)$.\qed
+
+\begin{remark}
+In the matching-matrix method of \cite[Section~2.4]{PT}, $\EE T_n=2^n/(\mathbf 1^{\top}M^{-1}\mathbf 1)$, where $M$ records the overlaps between pairs of words of $\FP_{\lambda,n}$. By Lemma~\ref{lem:overlap}, the column of $M$ belonging to a word $w$, normalised as in \cite[(2.1)]{PT}, sums to
+\[
+1+\sum_{s=1}^{n-1}\mathbf 1_{\{w(s)<0\}}f_s(-w(s))\le1+C\sum_{s=1}^{n-1}\frac1s=O(\log n),
+\]
+which improves the bound $O(n^{1/4})$ of \cite[(2.23)]{PT}. The upper bound of Theorem~\ref{thm:main} does not need sign information on the entries of $M^{-1}$.
+\end{remark}
+
+\section{Numerical values}\label{sec:numerics}
+
+No step of the proof uses computation. For small $n$ the matching formula above can be evaluated exactly; Table~\ref{tab:exact} lists $\EE T_n$ for $\lambda=-1$, computed by rational Gaussian elimination and confirmed by solving the linear system of the prefix automaton. Table~\ref{tab:mc} gives Monte Carlo estimates for $\lambda=-1$, with normal-approximation $95\%$ intervals. The ratio to $n$ grows slowly, and the ratio to $n\log n$ is still drifting at $n=10^6$, so these values say nothing about a limiting constant. Table~1 of \cite{PT} reports $179.8$ at $n=100$, which is below the lower bound $\EE T_n\ge2^n/|\FP_{\lambda,n}|=1/f_n(a_n)=206.3$ given by the diagonal of the matching matrix, so it cannot be the expectation of the ending time used in \cite[(2.4)]{PT}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{rrrrr}
+\toprule
+$n$ & $a_n$ & $|\FP_{\lambda,n}|$ & $\EE T_n$ & decimal\\
+\midrule
+3 & 1 & 1 & 8 & 8.000000\\
+4 & 2 & 2 & 34/3 & 11.333333\\
+5 & 1 & 2 & 16 & 16.000000\\
+6 & 2 & 5 & 296/17 & 17.411765\\
+7 & 1 & 5 & 128/5 & 25.600000\\
+8 & 2 & 14 & 68202/2819 & 24.193686\\
+9 & 3 & 28 & 375006/12865 & 29.149320\\
+10 & 2 & 42 & 4555029/144001 & 31.631926\\
+11 & 3 & 90 & 317290872798/8937933785 & 35.499354\\
+12 & 2 & 132 & 17663784686/445122589 & 39.682966\\
+\bottomrule
+\end{tabular}
+\caption{Exact values of $\EE T_n$ for $\lambda=-1$.}\label{tab:exact}
+\end{table}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{rrrrrrr}
+\toprule
+$n$ & $a_n$ & trials & mean & $95\%$ interval & mean$/n$ & mean$/(n\log n)$\\
+\midrule
+100 & 10 & 30{,}000 & 416.3 & [412.7, 419.9] & 4.163 & 0.904\\
+200 & 14 & 30{,}000 & 872.5 & [865.0, 880.1] & 4.363 & 0.823\\
+500 & 22 & 20{,}000 & 2{,}342.7 & [2{,}317.5, 2{,}367.9] & 4.685 & 0.754\\
+1{,}000 & 32 & 20{,}000 & 4{,}946.3 & [4{,}891.4, 5{,}001.2] & 4.946 & 0.716\\
+2{,}000 & 44 & 20{,}000 & 10{,}227.6 & [10{,}113.0, 10{,}342.2] & 5.114 & 0.673\\
+10{,}000 & 100 & 8{,}000 & 56{,}062 & [55{,}063, 57{,}061] & 5.606 & 0.609\\
+100{,}000 & 316 & 1{,}000 & 657{,}063 & [621{,}650, 692{,}475] & 6.571 & 0.571\\
+1{,}000{,}000 & 1000 & 200 & 7{,}812{,}672 & [6{,}890{,}114, 8{,}735{,}231] & 7.813 & 0.566\\
+\bottomrule
+\end{tabular}
+\caption{Monte Carlo estimates of $\EE T_n$ for $\lambda=-1$.}\label{tab:mc}
+\end{table}
+
+\section*{Acknowledgements and funding}
+The research presented in this paper was supported by the European Research
+Council (ERC) under the European Union's Horizon Europe research and
+innovation program (grant agreement No.~101041711), by the Simons
+Foundation as part of the Collaboration on the Mathematical and Scientific
+Foundations of Deep Learning, by Heights Labs, by Convex Nexus Capital, by
+the Israel Science Foundation (grant number 2258/19), and by the Israel
+Science Foundation (ISF Grant 4101/25). Computational resources were
+provided in part by Google Cloud through its education credits program
+(credit 530550103).
+This work was done by multiple AI agents, Claude (Anthropic) and Codex (OpenAI), connected to Math Brain~\cite{MathBrainRepo} and working together inside the Brain framework~\cite{BrainFramework}, a shared, persistent memory in which the agents record claims, proofs, failed attempts and methods, retrieve one another's results, coordinate who works on what, and audit each other's work. For more on the details behind the Brain and Math Brain, see the Math Brain paper~\cite{MathBrainPaper}, the Math Brain repository~\cite{MathBrainRepo} and the Brain framework repository~\cite{BrainFramework}.
+
+\section*{Declaration of competing interest}
+The author holds equity in Heights Labs and in Convex Nexus Capital and
+has a management role at Convex Nexus Capital. These entities are included
+in the funding declaration above.
+
+\section*{Declaration of generative AI and AI-assisted technologies}
+The paper comes out of Math Brain, an ongoing project on the use of AI systems for research mathematics. In November 2026 Codex (OpenAI, GPT-6.1) found the proof of Theorem~\ref{thm:main} and carried out the computations, a second Codex instance reviewed the proof and repeated the computations independently, and Claude Opus~5.5 (Anthropic), working in Claude Code, wrote the paper. The author directed the work and is responsible for the content of the paper and for decisions concerning its dissemination.
+
+\section*{Data availability}
+The programs that produce Tables~\ref{tab:exact} and \ref{tab:mc}, their outputs and the \LaTeX{} source of the paper are available at \url{https://github.com/yspennstate/first-passage-pattern-waiting-time}.
+
+\begin{thebibliography}{99}
+\bibitem{GL} H.~U.~Gerber and S.-Y.~R.~Li, \emph{The occurrence of sequence patterns in repeated experiments and hitting times in a Markov chain}, Stochastic Process.\ Appl.\ \textbf{11} (1981), 101--108. doi:10.1016/0304-4149(81)90025-9.
+\bibitem{GO} L.~J.~Guibas and A.~M.~Odlyzko, \emph{String overlaps, pattern matching, and nontransitive games}, J.\ Combin.\ Theory Ser.\ A \textbf{30} (1981), 183--208. doi:10.1016/0097-3165(81)90005-4.
+\bibitem{Li} S.-Y.~R.~Li, \emph{A martingale approach to the study of occurrence of sequence patterns in repeated experiments}, Ann.\ Probab.\ \textbf{8} (1980), 1171--1176. doi:10.1214/aop/1176994578.
+\bibitem{PT} J.~Pitman and W.~Tang, \emph{Patterns in random walks and Brownian motion}, preprint, arXiv:1411.0041v3, 2014.
+\bibitem{PTpub} J.~Pitman and W.~Tang, \emph{Patterns in random walks and Brownian motion}, in: In Memoriam Marc Yor -- S\'eminaire de Probabilit\'es XLVII, Lecture Notes in Math.\ \textbf{2137}, Springer, Cham, 2015, 49--88. doi:10.1007/978-3-319-18585-9\_4.
+\bibitem{Tang} W.~Tang, \emph{Continuous paths in Brownian motion and related problems}, PhD thesis, University of California, Berkeley, 2017. \url{https://escholarship.org/uc/item/51j6244c}.
+\bibitem{MathBrainRepo} Y.~Shmalo, \emph{Math Brain: public snapshot, code and tests}, 2026. doi:10.5281/zenodo.24150837.
+\bibitem{MathBrainPaper} Y.~Shmalo, \emph{Math Brain: shared, auditable memory for multi-agent mathematical research}, October 2026, \url{https://github.com/yspennstate/math-brain-public/tree/main/papers/math-brain-2026-10-24}.
+\bibitem{BrainFramework} Y.~Shmalo, \emph{Brain Framework}, public software repository, 2026, \url{https://github.com/yspennstate/brain-framework-public}.
+\end{thebibliography}
+\end{document}

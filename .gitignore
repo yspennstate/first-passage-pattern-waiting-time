@@ -1,0 +1,7 @@
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/build.log
+code/simulate
+__pycache__/
