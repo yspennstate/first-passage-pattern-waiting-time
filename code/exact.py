@@ -75,7 +75,7 @@ def main():
     with open(args.out,'w') as f:
         wr=csv.writer(f);wr.writerow(['n','a','patterns','exact_ET','ET','automaton_ET','automaton_states','absolute_difference'])
         for n in range(2,args.max_n+1):
-            endpoint=math.ceil(-math.sqrt(n))
+            endpoint=math.floor(-math.sqrt(n))
             if (endpoint-n)%2: endpoint+=1
             a=-endpoint
             if not (0<a<=n): continue
